@@ -3,7 +3,7 @@ package org.resthub.todo;
 import javax.inject.Inject;
 import org.resthub.web.controller.RepositoryBasedRestController;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller @RequestMapping("/api/todo")
 public class TodoController extends RepositoryBasedRestController<Todo, String, TodoRepository> {
