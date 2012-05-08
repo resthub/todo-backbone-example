@@ -1,11 +1,12 @@
 define([
-  'jquery',
-  'underscore', 
+  'underscore',
+  'underscore.string',
   'backbone',
   'collections/todos',
   'views/todos',
-  'text!templates/stats.html'
-  ], function($, _, Backbone, Todos, TodoView, statsTemplate){
+  'text!templates/stats.html',
+  'i18n!nls/messages'
+  ], function(_, _s, Backbone, Todos, TodoView, statsTemplate, messages){
   var AppView = Backbone.View.extend({
     
     // Our template for the line of statistics at the bottom of the app.
@@ -45,7 +46,8 @@ define([
       this.$('#todo-stats').html(this.statsTemplate({
         total:      Todos.length,
         done:       done,
-        remaining:  remaining
+        remaining:  remaining,
+        messages:   messages
       }));
 
       this.allCheckbox.checked = !remaining;

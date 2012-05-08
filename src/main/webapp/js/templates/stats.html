@@ -1,0 +1,14 @@
+ <% if (total) { %>
+        <span class="todo-count">
+          <span class="number"><%= remaining %></span>
+          <span class="word"><%= remaining == 1 ? messages.item : messages.items %></span> <%= remaining == 1 ? messages.left : messages.lefts %>.
+        </span>
+      <% } %>
+      <% if (done) { %>
+        <span class="todo-clear">
+          <a href="#">
+            <%= done == 1 ? messages.clearitem : _.sprintf(messages.clearitems, done) %>
+            <!-- Clear <span class="number-done"><%= done %></span> completed <span class="word-done"><%= done == 1 ? 'item' : 'items' %></span>-->
+          </a>
+        </span>
+      <% } %>

@@ -11,6 +11,7 @@
     
     <properties>
         <resthub.version>2.0-SNAPSHOT</resthub.version>
+        <backbone.bootstrap.version>2.0-SNAPSHOT</backbone.bootstrap.version>
     </properties>
 
     <dependencies>
@@ -29,8 +30,8 @@
         
         <dependency>
             <groupId>org.resthub</groupId>
-            <artifactId>backbone-boilerplate</artifactId>
-            <version>${resthub.version}</version>
+            <artifactId>backbone-bootstrap</artifactId>
+            <version>${backbone.bootstrap.version}</version>
             <type>war</type>
         </dependency>
         
