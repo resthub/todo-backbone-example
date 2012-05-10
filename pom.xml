@@ -92,10 +92,6 @@
                                 <maxIdleTime>60000</maxIdleTime>
                             </connector>
                         </connectors>
-
-                        <webAppConfig>
-                            <contextPath>/todo</contextPath>
-                        </webAppConfig>
                     </configuration>
                 </plugin>
 
