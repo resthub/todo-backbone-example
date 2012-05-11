@@ -1,4 +1,4 @@
-package org.resthub.todo;
+package todo;
 
 
 import javax.servlet.ServletContext;

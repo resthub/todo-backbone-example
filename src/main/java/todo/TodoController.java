@@ -1,4 +1,4 @@
-package org.resthub.todo;
+package todo;
 
 import javax.inject.Inject;
 import org.resthub.web.controller.RepositoryBasedRestController;

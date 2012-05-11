@@ -1,4 +1,4 @@
-package org.resthub.todo;
+package todo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
