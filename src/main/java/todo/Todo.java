@@ -3,6 +3,9 @@ package todo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * A model class implemented as a POJO classes annotated by Spring Data annotations.
+ */
 @Document
 public class Todo {
     
