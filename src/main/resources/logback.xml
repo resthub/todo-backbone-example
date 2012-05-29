@@ -1,10 +1,25 @@
-<configuration> 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"> 
-        <layout class="ch.qos.logback.classic.PatternLayout"> 
-            <Pattern>%d [%thread] %level %logger - %m%n</Pattern> 
-        </layout> 
-    </appender> 
-    <root level="info"> 
-        <appender-ref ref="CONSOLE"/> 
-    </root> 
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!-- Standard console output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+        <Pattern>%d{HH:mm:ss} [%thread] %level %logger - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="org.resthub">
+        <level value="warn" />
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="warn" />
+    </logger>
+
+    <logger name="org.springframework.data">
+        <level value="debug" />
+    </logger>
+
+    <root level="warn">
+        <appender-ref ref="CONSOLE" />
+    </root>
 </configuration>

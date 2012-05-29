@@ -16,16 +16,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * This Spring MVC controller extends RESThub REST controller for CRUD operations, and show how to extend it with your
  * application specific functionnalites.
  */
-@Controller @RequestMapping("/api/todo")
+@Controller
+@RequestMapping("/api/todo")
 public class TodoController extends RepositoryBasedRestController<Todo, String, TodoRepository> {
 
     protected Logger logger = LoggerFactory.getLogger(TodoController.class);
-    
+
     @PostInitialize
     public void init() {
         this.repository.save(new Todo("test123"));
     }
-    
+
     @Inject
     @Override
     public void setRepository(TodoRepository repository) {
@@ -36,11 +37,10 @@ public class TodoController extends RepositoryBasedRestController<Todo, String, 
     public String getIdFromResource(Todo resource) {
         return resource.getId();
     }
-    
-    @RequestMapping(value="content/{content}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "content/{content}", method = RequestMethod.GET)
     @ResponseBody
     public List<Todo> searchByContent(@PathVariable String content) {
         return this.repository.findByContentLike(content);
     }
-    
 }

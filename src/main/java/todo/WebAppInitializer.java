@@ -15,16 +15,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-                
         XmlWebApplicationContext appContext = new XmlWebApplicationContext();
-        String[] locations = {"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"};
+        String[] locations = { "classpath*:resthubContext.xml", "classpath*:applicationContext.xml" };
         appContext.setConfigLocations(locations);
 
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/*");
-        
-        servletContext.addListener(new ContextLoaderListener(appContext));
 
+        servletContext.addListener(new ContextLoaderListener(appContext));
     }
 }

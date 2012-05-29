@@ -8,23 +8,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class Todo {
-    
+
     @Id
     private String id;
     private String content;
     private Integer order;
     private Boolean done;
-    
+
     public Todo() {
         done = false;
         order = 0;
-    } 
+    }
 
     public Todo(String content) {
         this.content = content;
         done = false;
         order = 0;
-    }    
+    }
 
     public String getContent() {
         return content;
@@ -62,5 +62,4 @@ public class Todo {
     public String toString() {
         return "Todo{" + "id=" + id + ", content=" + content + ", order=" + order + ", done=" + done + '}';
     }
-    
 }
