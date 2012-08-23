@@ -12,10 +12,10 @@
                            http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <import resource="classpath*:resthubDefaultWebServerContext.xml" />
+    <import resource="classpath*:resthubWebServerContext.xml" />
+    <import resource="classpath*:resthubMongodbContext.xml" />
 
     <context:component-scan base-package="todo" />
     <mongo:repositories base-package="todo" />
 
-    <mvc:default-servlet-handler />
 </beans>
