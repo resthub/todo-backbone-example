@@ -2,15 +2,16 @@ define([
   'jquery', 
   'underscore', 
   'backbone',
+  'resthub-handlebars',
   'text!templates/todos.html'
-  ], function($, _, Backbone, todosTemplate){
+  ], function($, _, Backbone, Handlebars, todos){
   var TodoView = Backbone.View.extend({
 
     //... is a list tag.
     tagName:  "li",
 
     // Cache the template function for a single item.
-    template: _.template(todosTemplate),
+    template: Handlebars.compile(todos),
 
     // The DOM events specific to an item.
     events: {

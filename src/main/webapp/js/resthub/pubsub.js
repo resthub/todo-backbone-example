@@ -10,6 +10,8 @@
  * http://benalman.com/about/license/
  */
 define(['jquery'], function($) {
+    
+        Pubsub = {};
 
 	/**
 	 * Stores event handlers
@@ -23,7 +25,7 @@ define(['jquery'], function($) {
 	 * @param {String} type A string that identify your custom javaScript event type
 	 * @param {function} callback(args) function to execute each time the event is triggered, with
 	 * 
-	 * @return Handle used to unsubscribe.
+	 * @return Handle used to unsubribe.
 	 */
 	Pubsub.subscribe = function(type, callback) {
 		// Creates an event source

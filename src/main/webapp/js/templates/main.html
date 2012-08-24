@@ -11,13 +11,13 @@
       <div class="content">
 
         <div id="create-todo">
-            <input id="new-todo" placeholder="<%= messages.tobedone %>" type="text" />
-          <span class="ui-tooltip-top" style="display:none;"><%= messages.pressenter %></span>
+            <input id="new-todo" placeholder="{{messages.tobedone}}" type="text" />
+          <span class="ui-tooltip-top" style="display:none;">{{messages.pressenter}}</span>
         </div>
 
         <div id="todos">
           <input class="check mark-all-done" type="checkbox"/>
-          <label for="check-all"><%= messages.markall %></label>
+          <label for="check-all">{{messages.markall}}</label>
           <ul id="todo-list"></ul>
         </div>
 
@@ -28,7 +28,7 @@
     </div>
 
     <div id="credits">
-        <%= messages.i18nby %> <a href="https://github.com/sdeleuze/">S&eacute;bastien Deleuze</a>.<br />
-        <%= messages.modularizedby %> <a href="http://backbonetutorials.com">Thomas Davis</a>.<br />
-        <%= messages.originallyby %> <a href="http://jgn.me/">J&eacute;r&ocirc;me Gravel-Niquet</a>.
+        {{messages.i18nby}} <a href="https://github.com/sdeleuze/">S&eacute;bastien Deleuze</a>.<br />
+        {{messages.modularizedby}} <a href="http://backbonetutorials.com">Thomas Davis</a>.<br />
+        {{messages.originallyby}} <a href="http://jgn.me/">J&eacute;r&ocirc;me Gravel-Niquet</a>.
     </div>

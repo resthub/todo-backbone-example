@@ -1,16 +1,15 @@
 define([
   'underscore',
-  'underscore.string',
   'backbone',
+  'resthub-handlebars',
   'collections/todos',
   'views/todos',
   'text!templates/stats.html',
   'i18n!nls/messages'
-  ], function(_, _s, Backbone, Todos, TodoView, statsTemplate, messages){
+  ], function(_, Backbone, Handlebars, Todos, TodoView, stats, messages){
   var AppView = Backbone.View.extend({
     
-    // Our template for the line of statistics at the bottom of the app.
-    statsTemplate: _.template(statsTemplate),
+    statsTemplate: Handlebars.compile(stats),
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
@@ -25,7 +24,7 @@ define([
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function(option) {
       _.bindAll(this, 'addOne', 'addAll', 'render', 'toggleAllComplete');
-
+      
       this.el = option.el;
       this.input    = this.el.find("#new-todo");
       this.allCheckbox = this.el.find(".mark-all-done")[0];
@@ -42,7 +41,7 @@ define([
     render: function() {
       var done = Todos.done().length;
       var remaining = Todos.remaining().length;
-
+      
       this.$('#todo-stats').html(this.statsTemplate({
         total:      Todos.length,
         done:       done,
