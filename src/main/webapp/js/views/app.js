@@ -4,12 +4,11 @@ define([
   'resthub-handlebars',
   'collections/todos',
   'views/todos',
-  'text!templates/stats.html',
+  'hb!templates/stats.html',
   'i18n!nls/messages'
-  ], function(_, Backbone, Handlebars, Todos, TodoView, stats, messages){
+  ], function(_, Backbone, Handlebars, Todos, TodoView, statsTmpl, messages){
   var AppView = Backbone.View.extend({
     
-    statsTemplate: Handlebars.compile(stats),
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
@@ -42,7 +41,7 @@ define([
       var done = Todos.done().length;
       var remaining = Todos.remaining().length;
       
-      this.$('#todo-stats').html(this.statsTemplate({
+      this.$('#todo-stats').html(statsTmpl({
         total:      Todos.length,
         done:       done,
         remaining:  remaining,

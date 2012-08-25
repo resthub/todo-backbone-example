@@ -21,32 +21,41 @@ require.config({
                 'jquery'
             ],
             exports:'Backbone'
+        },
+        'backbone-paginator':{
+            deps:[
+                'backbone',
+                'underscore',
+                'jquery'
+            ],
+            exports:'Backbone.Paginator'
         }
     },
 
     // Libraries
     paths:{
-        jquery:"libs/jquery",
-        underscore:"libs/underscore",
-        'underscore.string':"libs/underscore.string",
-        backbone:"libs/backbone",
-        localstorage:"libs/localstorage",
-        text:"libs/text",
-        i18n:"libs/i18n",
-        pubsub:"resthub/pubsub",
-        handlebars:"libs/handlebars",
-        'resthub-handlebars':"resthub/handlebars-helpers"
+        jquery:'libs/jquery',
+        underscore:'libs/underscore',
+        'underscore.string':'libs/underscore.string',
+        backbone:'libs/backbone',
+        localstorage:'libs/localstorage',
+        text:'libs/text',
+        i18n:'libs/i18n',
+        pubsub:'resthub/pubsub',
+        handlebars:'libs/handlebars',
+        'resthub-handlebars':'resthub/handlebars-helpers',
+        hb: 'resthub/handlebars-require',
+        'backbone-paginator':'libs/backbone.paginator'
     },
     
     locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function
-require(['jquery', 'router', 'text!templates/main.html', 'i18n!nls/messages', 'views/app', ]
-        , function($, AppRouter, main, messages, AppView){
-    var mainTmpl = Handlebars.compile(main);
-    $("body").html(mainTmpl({messages: messages}));
-    new AppView({el: $("#todoapp")});
+require(['jquery', 'router', 'hb!templates/main.html', 'i18n!nls/messages', 'views/app' ]
+        , function($, AppRouter, mainTmpl, messages, AppView){
+    $('body').html(mainTmpl({messages: messages}));
+    new AppView({el: $('#todoapp')});
     new AppRouter;
     Backbone.history.start();
 });

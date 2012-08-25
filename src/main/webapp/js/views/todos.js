@@ -1,17 +1,9 @@
-define([
-  'jquery', 
-  'underscore', 
-  'backbone',
-  'resthub-handlebars',
-  'text!templates/todos.html'
-  ], function($, _, Backbone, Handlebars, todos){
+define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hb!templates/todos.html'],
+function($, _, Backbone, Handlebars, todosTmpl){
   var TodoView = Backbone.View.extend({
 
     //... is a list tag.
     tagName:  "li",
-
-    // Cache the template function for a single item.
-    template: Handlebars.compile(todos),
 
     // The DOM events specific to an item.
     events: {
@@ -33,7 +25,7 @@ define([
 
     // Re-render the contents of the todo item.
     render: function() {
-      $(this.el).html(this.template(this.model.toJSON()));
+      $(this.el).html(todosTmpl(this.model.toJSON()));
       this.input = this.$('.todo-input');
       return this;
     },
