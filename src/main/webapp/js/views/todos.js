@@ -1,62 +1,59 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hb!templates/todos.html'],
-function($, _, Backbone, Handlebars, todosTmpl){
-  var TodoView = Backbone.View.extend({
+define([
+  'underscore',
+  'backbone',
+  'resthub-handlebars',
+  'collections/todos',
+  'hb!templates/todos.html',
+  'views/todo',
+  'i18n!nls/messages'
+  ], function(_, Backbone, Handlebars, Todos, todosTmpl, TodoView, messages){
+  var TodosView = Backbone.View.extend({
 
-    //... is a list tag.
-    tagName:  "li",
-
-    // The DOM events specific to an item.
+    // Delegated events for creating new items, and clearing completed ones.
     events: {
-      "click .check"              : "toggleDone",
-      "dblclick div.todo-content" : "edit",
-      "click span.todo-destroy"   : "clear",
-      "keypress .todo-input"      : "updateOnEnter",
-      "blur .todo-input"          : "close"
+      "click .mark-all-done": "toggleAllComplete"
     },
 
-    // The TodoView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-    // app, we set a direct reference on the model for convenience.
-    initialize: function() {
-      _.bindAll(this, 'render', 'close', 'remove');
-      this.model.bind('change', this.render);
-      this.model.bind('destroy', this.remove);
+    // At initialization we bind to the relevant events on the `Todos`
+    // collection, when items are added or changed. Kick things off by
+    // loading any preexisting todos that might be saved in *localStorage*.
+    initialize: function(options) {
+      _.bindAll(this, 'addOne', 'addAll', 'render', 'toggleAllComplete');
+      
+      this.$root = options.root;
+
+      Todos.bind('add',     this.addOne);
+      Todos.bind('reset',   this.addAll);
+      Todos.bind('all',     this.render);
+
+      this.$el.html(todosTmpl({messages: messages}));
+      this.$root.append(this.$el);
+
     },
 
-    // Re-render the contents of the todo item.
     render: function() {
-      $(this.el).html(todosTmpl(this.model.toJSON()));
-      this.input = this.$('.todo-input');
-      return this;
+        var remaining = Todos.remaining().length;
+        this.allCheckbox = this.$el.find(".mark-all-done")[0];
+        this.allCheckbox.checked = !remaining;
     },
 
-    // Toggle the `"done"` state of the model.
-    toggleDone: function() {
-      this.model.toggle();
+    // Add a single todo item to the list by creating a view for it, and
+    // appending its element to the `<ul>`.
+    addOne: function(todo) {
+      new TodoView({root: $('#todo-list'), model: todo});
     },
 
-    // Switch this view into `"editing"` mode, displaying the input field.
-    edit: function() {
-      $(this.el).addClass("editing");
-      this.input.focus();
+    // Add all items in the **Todos** collection at once.
+    addAll: function() {
+      Todos.each(this.addOne);
     },
 
-    // Close the `"editing"` mode, saving changes to the todo.
-    close: function() {
-      this.model.save({content: this.input.val()});
-      $(this.el).removeClass("editing");
-    },
-
-    // If you hit `enter`, we're through editing the item.
-    updateOnEnter: function(e) {
-      if (e.keyCode == 13) this.close();
-    },
-
-    // Remove the item, destroy the model.
-    clear: function() {
-      this.model.clear();
+    // Change each todo so that it's `done` state matches the check all
+    toggleAllComplete: function () {
+      var done = this.allCheckbox.checked;
+      Todos.each(function (todo) { todo.save({'done': done}); });
     }
 
   });
-  return TodoView;
+  return TodosView;
 });

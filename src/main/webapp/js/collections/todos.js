@@ -10,6 +10,8 @@ define([
     // Reference to this collection's model.
     model: Todo,
 
+    url: 'api/todo',
+
     paginator_core: {
         url: 'api/todo?'
     },
