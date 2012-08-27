@@ -44,7 +44,7 @@ require.config({
         pubsub:'resthub/pubsub',
         handlebars:'libs/handlebars',
         'resthub-handlebars':'resthub/handlebars-helpers',
-        hb: 'resthub/handlebars-require',
+        hbs: 'resthub/handlebars-require',
         'backbone-paginator':'libs/backbone.paginator'
     },
     
@@ -52,10 +52,9 @@ require.config({
 });
 
 // Load our app module and pass it to our definition function
-require(['backbone', 'router', 'hb!templates/todos.html', 'i18n!nls/messages', 'views/app', 'collections/todos']
-        , function(Backbone, AppRouter, mainTmpl, messages, AppView, Todos){
+require(['backbone', 'router', 'i18n!nls/messages', 'views/app', 'collections/todos']
+        , function(Backbone, AppRouter, messages, AppView, Todos){
     var appView = new AppView({root: $('#todoapp')});
     new AppRouter;
     Backbone.history.start();
-    Todos.fetch();
 });

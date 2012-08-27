@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hb!templates/todo.html'],
+define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/todo.html'],
 function($, _, Backbone, Handlebars, todoTmpl){
   var TodoView = Backbone.View.extend({
 
@@ -25,8 +25,6 @@ function($, _, Backbone, Handlebars, todoTmpl){
       // Add this context in order to allow automatic removal of the calback with dispose()
       this.model.on('change', this.render, this);
       this.model.on('destroy', this.remove, this);
-
-
 
       this.render();
     },

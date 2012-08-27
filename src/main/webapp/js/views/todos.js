@@ -3,7 +3,7 @@ define([
   'backbone',
   'resthub-handlebars',
   'collections/todos',
-  'hb!templates/todos.html',
+  'hbs!templates/todos.html',
   'views/todo',
   'i18n!nls/messages'
   ], function(_, Backbone, Handlebars, Todos, todosTmpl, TodoView, messages){
@@ -23,20 +23,22 @@ define([
       _.bindAll(this, 'addOne', 'addAll', 'render', 'toggleAllComplete');
       
       this.$root = options.root;
+      this.$root.html(this.$el);
 
       // Add this context in order to allow automatic removal of the calback with dispose()
       Todos.on('add',     this.addOne, this);
       Todos.on('reset',   this.addAll, this);
       Todos.on('all',     this.render, this);
 
+      // Done on init because it don't change after (exept the allCheckbox)
       this.$el.html(todosTmpl({messages: messages}));
-      this.$root.html(this.$el);
+      this.allCheckbox = this.$el.find('.mark-all-done')[0];
 
+      Todos.fetch();
     },
 
     render: function() {
         var remaining = Todos.remaining().length;
-        this.allCheckbox = this.$el.find('.mark-all-done')[0];
         this.allCheckbox.checked = !remaining;
     },
 
