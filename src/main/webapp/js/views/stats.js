@@ -3,13 +3,17 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hb!templates/
         var StatsView = Backbone.View.extend({
 
             events: {
-                "click .todo-clear a": "clearCompleted"
+                'click .todo-clear a': 'clearCompleted'
             },
+
+            collection: Todos,
 
             initialize: function(options) {
                 this.$root = options.root;
+                this.$root.html(this.$el);
                 _.bindAll(this, 'render');
-                Todos.bind('all',   this.render);
+                // Add this context in order to allow automatic removal of the calback with dispose()
+                Todos.on('all',  this.render, this);
             },
 
             render: function() {
@@ -22,9 +26,6 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hb!templates/
                     remaining:  remaining,
                     messages:   messages
                 }));
-
-                this.$root.append(this.$el);
-
             },
 
             // Clear all done todo items, destroying their models.

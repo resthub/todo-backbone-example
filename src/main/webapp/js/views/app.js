@@ -3,20 +3,22 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hb!templates/
         var AppView = Backbone.View.extend({
 
             events: {
-                "keypress #new-todo":  "createOnEnter",
-                "keyup #new-todo":     "showTooltip"
+                'keypress #new-todo':  'createOnEnter',
+                'keyup #new-todo':     'showTooltip'
             },
+
+            collection: Todos,
 
             initialize: function(options) {
                 this.$root = options.root;
+                this.$root.html(this.$el);
+
                 this.render();
-                Todos.fetch();
             },
 
             render: function() {
                 this.$el.html(appTmpl({messages: messages}));
-                this.$root.append(this.$el);
-                this.input = this.$el.find("#new-todo");
+                this.input = this.$el.find('#new-todo');
 
                 new TodosView({root: $('#todos')});
                 new StatsView({root: $('#todo-stats')});
@@ -42,7 +44,7 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hb!templates/
             // Lazily show the tooltip that tells you to press `enter` to save
             // a new todo item, after one second.
             showTooltip: function(e) {
-                var tooltip = this.$(".ui-tooltip-top");
+                var tooltip = this.$('.ui-tooltip-top');
                 var val = this.input.val();
                 tooltip.fadeOut();
                 if (this.tooltipTimeout) clearTimeout(this.tooltipTimeout);

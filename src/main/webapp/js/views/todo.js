@@ -3,15 +3,15 @@ function($, _, Backbone, Handlebars, todoTmpl){
   var TodoView = Backbone.View.extend({
 
     //... is a list tag.
-    tagName:  "li",
+    tagName:  'li',
 
     // The DOM events specific to an item.
     events: {
-      "click .check"              : "toggleDone",
-      "dblclick div.todo-content" : "edit",
-      "click span.todo-destroy"   : "clear",
-      "keypress .todo-input"      : "updateOnEnter",
-      "blur .todo-input"          : "close"
+      'click .check'              : 'toggleDone',
+      'dblclick div.todo-content' : 'edit',
+      'click span.todo-destroy'   : 'clear',
+      'keypress .todo-input'      : 'updateOnEnter',
+      'blur .todo-input'          : 'close'
     },
 
     // The TodoView listens for changes to its model, re-rendering. Since there's
@@ -19,10 +19,14 @@ function($, _, Backbone, Handlebars, todoTmpl){
     // app, we set a direct reference on the model for convenience.
     initialize: function(options) {
       this.$root = options.root;
+      this.$root.append(this.$el);
 
       _.bindAll(this, 'render', 'close', 'remove');
-      this.model.bind('change', this.render);
-      this.model.bind('destroy', this.remove);
+      // Add this context in order to allow automatic removal of the calback with dispose()
+      this.model.on('change', this.render, this);
+      this.model.on('destroy', this.remove, this);
+
+
 
       this.render();
     },
@@ -30,26 +34,25 @@ function($, _, Backbone, Handlebars, todoTmpl){
     // Re-render the contents of the todo item.
     render: function() {
       this.$el.html(todoTmpl(this.model.toJSON()));
-      this.$root.append(this.$el);
       this.input = this.$('.todo-input');
       return this;
     },
 
-    // Toggle the `"done"` state of the model.
+    // Toggle the `'done'` state of the model.
     toggleDone: function() {
       this.model.toggle();
     },
 
-    // Switch this view into `"editing"` mode, displaying the input field.
+    // Switch this view into `'editing'` mode, displaying the input field.
     edit: function() {
-      this.$el.addClass("editing");
+      this.$el.addClass('editing');
       this.input.focus();
     },
 
-    // Close the `"editing"` mode, saving changes to the todo.
+    // Close the `'editing'` mode, saving changes to the todo.
     close: function() {
       this.model.save({content: this.input.val()});
-      this.$el.removeClass("editing");
+      this.$el.removeClass('editing');
     },
 
     // If you hit `enter`, we're through editing the item.

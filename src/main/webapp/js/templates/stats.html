@@ -7,6 +7,6 @@
     {{/if}}
     {{#if done}}
     <span class="todo-clear">
-        <a href="#">{{#ifequals done 1}} messages.clearitem {{else}} {{sprintf messages.clearitems done}} {{/ifequals}}</a>
+        <a id="toto">{{#ifequals done 1}} {{messages.clearitem}} {{else}} {{sprintf messages.clearitems done}} {{/ifequals}}</a>
     </span>
     {{/if}}

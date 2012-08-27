@@ -175,6 +175,7 @@ body {
 }
 #todo-stats .todo-clear {
 	float: right;
+    cursor: pointer;
 }
 #todo-stats .todo-clear a {
 	color: #777777;

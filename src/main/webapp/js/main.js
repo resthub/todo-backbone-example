@@ -52,9 +52,10 @@ require.config({
 });
 
 // Load our app module and pass it to our definition function
-require(['backbone', 'router', 'hb!templates/todos.html', 'i18n!nls/messages', 'views/app']
-        , function(Backbone, AppRouter, mainTmpl, messages, AppView){
-    new AppView({root: $('#todoapp')});
+require(['backbone', 'router', 'hb!templates/todos.html', 'i18n!nls/messages', 'views/app', 'collections/todos']
+        , function(Backbone, AppRouter, mainTmpl, messages, AppView, Todos){
+    var appView = new AppView({root: $('#todoapp')});
     new AppRouter;
     Backbone.history.start();
+    Todos.fetch();
 });
