@@ -1,5 +1,5 @@
 define([
-  'underscore', 'resthub-backbone', 'resthub-handlebars', 'collections/todos', 'hbs!templates/todos.html', 'views/todo', 'i18n!nls/messages'],
+  'underscore', 'backbone', 'resthub-handlebars', 'collections/todos', 'hbs!templates/todos.html', 'views/todo', 'i18n!nls/messages'],
   function(_, Backbone, Handlebars, Todos, todosTmpl, TodoView, messages){
   var TodosView = Backbone.View.extend({
 

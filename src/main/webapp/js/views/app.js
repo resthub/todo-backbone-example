@@ -22,7 +22,6 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates
 
                 new TodosView({root: $('#todos')});
                 new StatsView({root: $('#todo-stats')});
-                new StatsView({root: $('#todo-stats')});
             },
 
             // Generate the attributes for a new Todo item.
