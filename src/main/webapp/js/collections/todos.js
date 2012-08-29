@@ -1,9 +1,4 @@
-define([
-  'underscore', 
-  'backbone',
-  'backbone-paginator',
-  'models/todo'
-  ], function(_, Backbone, BackbonePaginator, Todo){
+define(['underscore', 'backbone', 'backbone-paginator', 'models/todo'], function(_, Backbone, BackbonePaginator, Todo){
 	  
 	var TodosCollection = BackbonePaginator.requestPager.extend({
 
@@ -17,15 +12,12 @@ define([
     },
 
     paginator_ui: {
-         perPage: 100 // Hardcoded for the moment
+         currentPage: 'all' // Hardcoded for the moment
     },
 
     server_api:{
         'page':function () {
             return this.currentPage;
-        },
-        'perPage':function () {
-            return this.perPage;
         }
     },
 

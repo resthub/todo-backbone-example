@@ -38,6 +38,7 @@ require.config({
         underscore:'libs/underscore',
         'underscore.string':'libs/underscore.string',
         backbone:'libs/backbone',
+        'resthub-backbone':'resthub/backbone.ext',
         localstorage:'libs/localstorage',
         text:'libs/text',
         i18n:'libs/i18n',
@@ -54,7 +55,7 @@ require.config({
 // Load our app module and pass it to our definition function
 require(['backbone', 'router', 'i18n!nls/messages', 'views/app', 'collections/todos']
         , function(Backbone, AppRouter, messages, AppView, Todos){
-    var appView = new AppView({root: $('#todoapp')});
+    new AppView({root: $('#todoapp')});
     new AppRouter;
     Backbone.history.start();
 });
