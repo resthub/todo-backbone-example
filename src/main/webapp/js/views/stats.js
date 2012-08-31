@@ -5,32 +5,29 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates
             events: {
                 'click .todo-clear a': 'clearCompleted'
             },
-
             collection: Todos,
+            template: statsTmpl,
 
-            initialize: function(options) {
-                this.$root = options.root;
-                this.$root.html(this.$el);
+            initialize: function() {
                 _.bindAll(this, 'render');
                 // Add this context in order to allow automatic removal of the calback with dispose()
-                Todos.on('all',  this.render, this);
+                this.collection.on('all',  this.refresh, this);
             },
 
-            render: function() {
-                var done = Todos.done().length;
-                var remaining = Todos.remaining().length;
-
-                this.$el.html(statsTmpl({
-                    total:      Todos.length,
+            refresh: function() {
+                var done = this.collection.done().length;
+                var remaining = this.collection.remaining().length;
+                this.render({
+                    total:      this.collection.length,
                     done:       done,
                     remaining:  remaining,
                     messages:   messages
-                }));
+                })
             },
 
             // Clear all done todo items, destroying their models.
             clearCompleted: function() {
-                _.each(Todos.done(), function(todo){ todo.clear(); });
+                _.each(this.collection.done(), function(todo){ todo.clear(); });
                 return false;
             }
 

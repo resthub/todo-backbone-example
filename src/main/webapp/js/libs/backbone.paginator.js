@@ -688,7 +688,7 @@ Backbone.Paginator = (function ( Backbone, _, $ ) {
 			
 			// Create default values if no others are specified
 			_.defaults(self.paginator_ui, {
-				firstPage: 0,
+				firstPage: 1,
 				currentPage: 1,
 				perPage: 5,
 				totalPages: 10

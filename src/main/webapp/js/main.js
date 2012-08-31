@@ -56,6 +56,6 @@ require.config({
 require(['backbone', 'router', 'i18n!nls/messages', 'views/app', 'collections/todos']
         , function(Backbone, AppRouter, messages, AppView, Todos){
     new AppView({root: $('#todoapp')});
-    new AppRouter;
+    new AppRouter();
     Backbone.history.start();
 });

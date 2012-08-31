@@ -1,34 +1,27 @@
 define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/app.html', 'i18n!nls/messages', 'views/todos', 'views/stats', 'collections/todos'],
-    function($, _, Backbone, Handlebars, appTmpl, messages, TodosView, StatsView, Todos){
+    function($, _, Backbone, Handlebars, appTmpl, messages, TodosView, StatsView, TodoCollection){
         var AppView = Backbone.View.extend({
 
             events: {
                 'keypress #new-todo':  'createOnEnter',
                 'keyup #new-todo':     'showTooltip'
             },
+            collection: new TodoCollection(),
+            template: appTmpl,
 
-            collection: Todos,
-
-            initialize: function(options) {
-                this.$root = options.root;
-                this.$root.html(this.$el);
-
-                this.render();
-            },
-
-            render: function() {
-                this.$el.html(appTmpl({messages: messages}));
-                this.input = this.$el.find('#new-todo');
-
-                new TodosView({root: $('#todos')});
-                new StatsView({root: $('#todo-stats')});
+            initialize: function() {
+                this.render({messages: messages});
+                // this.$() is a shortcut for this.$el.find()
+                this.input = this.$('#new-todo');
+                new TodosView({root: $('#todos'), collection: this.collection});
+                new StatsView({root: $('#todo-stats'), collection: this.collection});
             },
 
             // Generate the attributes for a new Todo item.
             newAttributes: function() {
                 return {
                     content: this.input.val(),
-                    order:   Todos.nextOrder(),
+                    order:   this.collection.nextOrder(),
                     done:    false
                 };
             },
@@ -37,7 +30,7 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates
             // persisting it to *localStorage*.
             createOnEnter: function(e) {
                 if (e.keyCode != 13) return;
-                Todos.create(this.newAttributes());
+                this.collection.create(this.newAttributes());
                 this.input.val('');
             },
 

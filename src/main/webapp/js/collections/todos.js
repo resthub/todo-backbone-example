@@ -1,6 +1,6 @@
 define(['underscore', 'backbone', 'backbone-paginator', 'models/todo'], function(_, Backbone, BackbonePaginator, Todo){
 	  
-	var TodosCollection = BackbonePaginator.requestPager.extend({
+	var TodoCollection = BackbonePaginator.requestPager.extend({
 
     // Reference to this collection's model.
     model: Todo,
@@ -52,5 +52,5 @@ define(['underscore', 'backbone', 'backbone-paginator', 'models/todo'], function
     }
 
   });
-  return new TodosCollection;
+  return TodoCollection;
 });

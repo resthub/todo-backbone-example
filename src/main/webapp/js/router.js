@@ -8,13 +8,15 @@ define(['backbone'], function(Backbone){
         	var locale = localStorage.getItem('locale');
         	if(locale != 'fr-fr') {
 	        	localStorage.setItem('locale', 'fr-fr'); 
-				location.reload(); 
+				// i18n plugin require page reload !
+                location.reload();
 			}
         },
         en: function( ){
         	var locale = localStorage.getItem('locale');
         	if(locale != 'en-us') {
-            	localStorage.setItem('locale', 'en-us'); 
+            	localStorage.setItem('locale', 'en-us');
+                // i18n plugin require page reload !
 				location.reload();
 			}
         }

@@ -1,38 +1,34 @@
 define([
   'underscore', 'backbone', 'resthub-handlebars', 'collections/todos', 'hbs!templates/todos.html', 'views/todo', 'i18n!nls/messages'],
-  function(_, Backbone, Handlebars, Todos, todosTmpl, TodoView, messages){
+  function(_, Backbone, Handlebars, TodoCollection, todosTmpl, TodoView, messages){
   var TodosView = Backbone.View.extend({
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       'click .mark-all-done': 'toggleAllComplete'
     },
-
-     collection: Todos,
+    template: todosTmpl,
 
     // At initialization we bind to the relevant events on the `Todos`
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function(options) {
       _.bindAll(this, 'addOne', 'addAll', 'render', 'toggleAllComplete');
-      
-      this.$root = options.root;
-      this.$root.html(this.$el);
 
       // Add this context in order to allow automatic removal of the calback with dispose()
-      Todos.on('add',     this.addOne, this);
-      Todos.on('reset',   this.addAll, this);
-      Todos.on('all',     this.render, this);
+      this.collection.on('add',     this.addOne, this);
+      this.collection.on('reset',   this.addAll, this);
+      this.collection.on('all',     this.refresh, this);
 
-      // Done on init because it don't change after (exept the allCheckbox)
-      this.$el.html(todosTmpl({messages: messages}));
-      this.allCheckbox = this.$el.find('.mark-all-done')[0];
+      this.render({messages: messages});
 
-      Todos.fetch();
+      this.collection.fetch();
     },
 
-    render: function() {
-        var remaining = Todos.remaining().length;
+    refresh: function() {
+        var remaining = this.collection.remaining().length;
+        // this.$() is a shortcut for this.$el.find()
+        this.allCheckbox = this.$('.mark-all-done')[0];
         this.allCheckbox.checked = !remaining;
     },
 
@@ -44,13 +40,13 @@ define([
 
     // Add all items in the **Todos** collection at once.
     addAll: function() {
-      Todos.each(this.addOne);
+        this.collection.each(this.addOne);
     },
 
     // Change each todo so that it's `done` state matches the check all
     toggleAllComplete: function () {
       var done = this.allCheckbox.checked;
-      Todos.each(function (todo) { todo.save({'done': done}); });
+      this.collection.each(function (todo) { todo.save({'done': done}); });
     }
 
   });
