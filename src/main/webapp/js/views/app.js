@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/app.html', 'i18n!nls/messages', 'views/todos', 'views/stats', 'collections/todos'],
+define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/app', 'i18n!nls/messages', 'views/todos', 'views/stats', 'collections/todos'],
     function($, _, Backbone, Handlebars, appTmpl, messages, TodosView, StatsView, TodoCollection){
         var AppView = Backbone.View.extend({
 
@@ -11,10 +11,10 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates
 
             initialize: function() {
                 this.render({messages: messages});
-                // this.$() is a shortcut for this.$el.find()
+                // this.$() is a shortcut for this.$el.find().
                 this.input = this.$('#new-todo');
-                new TodosView({root: $('#todos'), collection: this.collection});
-                new StatsView({root: $('#todo-stats'), collection: this.collection});
+                new TodosView({root: this.$('#todos'), collection: this.collection});
+                new StatsView({root: this.$('#todo-stats'), collection: this.collection});
             },
 
             // Generate the attributes for a new Todo item.

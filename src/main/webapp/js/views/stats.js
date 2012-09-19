@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/stats.html', 'collections/todos', 'i18n!nls/messages'],
+define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/stats', 'collections/todos', 'i18n!nls/messages'],
     function($, _, Backbone, Handlebars, statsTmpl, Todos, messages){
         var StatsView = Backbone.View.extend({
 

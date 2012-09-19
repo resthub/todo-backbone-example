@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/todo.html'],
+define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/todo'],
 function($, _, Backbone, Handlebars, todoTmpl){
   var TodoView = Backbone.View.extend({
 
