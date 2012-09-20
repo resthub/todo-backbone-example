@@ -22,7 +22,8 @@ define([
 
       this.render({messages: messages});
 
-      this.collection.fetch();
+      // Fetch unpaginated collection
+      this.collection.fetch({ data: { page: 'no'} });
     },
 
     refresh: function() {

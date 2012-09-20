@@ -1,33 +1,11 @@
-define(['underscore', 'backbone', 'backbone-paginator', 'models/todo'], function(_, Backbone, BackbonePaginator, Todo){
+define(['backbone', 'models/todo'], function(Backbone, Todo){
 	  
-	var TodoCollection = BackbonePaginator.requestPager.extend({
+    var TodoCollection = Backbone.Collection.extend({
 
     // Reference to this collection's model.
     model: Todo,
 
     url: 'api/todo',
-
-    paginator_core: {
-        url: 'api/todo?'
-    },
-
-    paginator_ui: {
-         currentPage: 'all' // Hardcoded for the moment
-    },
-
-    server_api:{
-        'page':function () {
-            return this.currentPage;
-        }
-    },
-
-    parse:function (response) {
-        var todos = response.content;
-        this.totalPages = response.totalPages;
-        this.totalRecords = response.totalElements;
-        this.lastPage = this.totalPages;
-        return todos;
-    },
 
     // Filter down the list of all todo items that are finished.
     done: function() {
