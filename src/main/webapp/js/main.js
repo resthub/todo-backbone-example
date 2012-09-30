@@ -49,8 +49,8 @@ require.config({
         i18n: 'libs/i18n',
         pubsub: 'libs/resthub/pubsub',
         'bootstrap': 'libs/bootstrap',
-        'backbone-validation': 'libs/backbone-validation',
-        'resthub-backbone-validation': 'libs/resthub/backbone-validation.ext',
+        'backbone-validation-orig': 'libs/backbone-validation',
+        'backbone-validation': 'libs/resthub/backbone-validation.ext',
         handlebars: 'libs/handlebars',
         'resthub-handlebars': 'libs/resthub/handlebars-helpers',
         'backbone-queryparams': 'libs/backbone.queryparams',
@@ -59,6 +59,7 @@ require.config({
         keymaster: 'libs/keymaster',
         hbs: 'libs/resthub/require-handlebars'
     },
+
     locale: localStorage.getItem('locale') || 'en-us'
 });
     
@@ -68,5 +69,4 @@ require(['backbone', 'router', 'i18n!nls/messages', 'views/app', 'collections/to
         , function(Backbone, AppRouter, messages, AppView, Todos){
     new AppView({root: $('#todoapp')});
     new AppRouter();
-    Backbone.history.start();
 });

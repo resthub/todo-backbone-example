@@ -1,5 +1,8 @@
 define(['backbone'], function(Backbone){
 	var AppRouter = Backbone.Router.extend({
+        initialize: function() {
+            Backbone.history.start();
+        },
         routes: {
             'fr': 'fr',
             'en': 'en'
