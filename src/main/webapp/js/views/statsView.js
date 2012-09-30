@@ -1,11 +1,10 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/stats', 'collections/todos', 'i18n!nls/messages'],
-    function($, _, Backbone, Handlebars, statsTmpl, Todos, messages){
+define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/stats', 'i18n!nls/messages'],
+    function($, _, Backbone, Handlebars, statsTmpl, messages){
         var StatsView = Backbone.View.extend({
 
             events: {
                 'click .todo-clear a': 'clearCompleted'
             },
-            collection: Todos,
             template: statsTmpl,
 
             initialize: function() {

@@ -65,8 +65,8 @@ require.config({
     
 
 // Load our app module and pass it to our definition function
-require(['backbone', 'router', 'i18n!nls/messages', 'views/app', 'collections/todos']
-        , function(Backbone, AppRouter, messages, AppView, Todos){
+require(['backbone', 'router', 'i18n!nls/messages', 'views/appView']
+        , function(Backbone, AppRouter, messages, AppView){
     new AppView({root: $('#todoapp')});
     new AppRouter();
 });

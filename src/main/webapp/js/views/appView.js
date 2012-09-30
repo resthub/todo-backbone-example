@@ -1,5 +1,5 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/app', 'i18n!nls/messages', 'views/todos', 'views/stats', 'collections/todos'],
-    function($, _, Backbone, Handlebars, appTmpl, messages, TodosView, StatsView, TodoCollection){
+define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/app', 'i18n!nls/messages', 'views/todoCollectionView', 'views/statsView', 'collections/todoCollection'],
+    function($, _, Backbone, Handlebars, appTmpl, messages, TodoCollectionView, StatsView, TodoCollection){
         var AppView = Backbone.View.extend({
 
             events: {
@@ -13,7 +13,7 @@ define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates
                 this.render({messages: messages});
                 // this.$() is a shortcut for this.$el.find().
                 this.input = this.$('#new-todo');
-                new TodosView({root: this.$('#todos'), collection: this.collection});
+                new TodoCollectionView({root: this.$('#todos'), collection: this.collection});
                 new StatsView({root: this.$('#todo-stats'), collection: this.collection});
             },
 
