@@ -1,6 +1,6 @@
 define(['backbone', 'models/todo'], function(Backbone, Todo){
 	  
-    var TodoCollection = Backbone.Collection.extend({
+    var Todos = Backbone.Collection.extend({
 
     // Reference to this collection's model.
     model: Todo,
@@ -30,5 +30,5 @@ define(['backbone', 'models/todo'], function(Backbone, Todo){
     }
 
   });
-  return TodoCollection;
+  return Todos;
 });

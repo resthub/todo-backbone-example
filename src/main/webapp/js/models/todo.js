@@ -1,5 +1,5 @@
 define(['underscore', 'backbone'], function(_, Backbone) {
-  var TodoModel = Backbone.Model.extend({
+  var Todo = Backbone.Model.extend({
 
     // Default attributes for the todo.
     defaults: {
@@ -28,5 +28,5 @@ define(['underscore', 'backbone'], function(_, Backbone) {
     }
 
   });
-  return TodoModel;
+  return Todo;
 });
