@@ -1,7 +1,7 @@
 define([
-  'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/todos', 'views/todoView', 'i18n!nls/messages'],
-  function(_, Backbone, Handlebars, todosTmpl, TodoView, messages){
-  var TodosView = Backbone.View.extend({
+  'underscore', 'backbone', 'hbs!templates/todos', 'views/todoView', 'i18n!nls/messages'],
+  function(_, Backbone, todosTmpl, TodoView, messages){
+  var TodosView = Backbone.ResthubView.extend({
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {

@@ -1,6 +1,6 @@
-define(['jquery', 'underscore', 'backbone', 'resthub-handlebars', 'hbs!templates/stats', 'i18n!nls/messages'],
-    function($, _, Backbone, Handlebars, statsTmpl, messages){
-        var StatsView = Backbone.View.extend({
+define(['jquery', 'underscore', 'backbone', 'hbs!templates/stats', 'i18n!nls/messages'],
+    function($, _, Backbone, statsTmpl, messages){
+        var StatsView = Backbone.ResthubView.extend({
 
             events: {
                 'click .todo-clear a': 'clearCompleted'

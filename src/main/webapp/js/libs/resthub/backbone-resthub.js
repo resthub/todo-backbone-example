@@ -1,37 +1,21 @@
 define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-destroyed'], function(_, Backbone, PubSub) {
 
-    // Backbone.View extension
-    // -----------------------
-
-    var originalPrototype        = Backbone.View.prototype;
-    var originalDelegateEvents   = originalPrototype.delegateEvents;
-    var originalUndelegateEvents = originalPrototype.undelegateEvents;
-    var originalSetElement       = originalPrototype.setElement;
-    var originalRemove           = originalPrototype.remove;
-    var originalDispose          = originalPrototype.dispose;
-    var originalConstructor      = Backbone.View;
-    var originalExtend           = Backbone.View.extend;
-
-    var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'root', 'strategy', 'context'];
-
-    // Restore original prototype
-    Backbone.View.prototype = originalPrototype;
-    Backbone.View.extend    = originalExtend;
 
     // extend **Backbone.View** properties and methods.
-    _.extend(Backbone.View.prototype, {
+    Backbone.ResthubView = Backbone.View.extend({
+        
+        resthubViewOptions : ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'root', 'strategy', 'context'],
 
         globalEventsIdentifier: '!',
 
         strategy: 'replace',
 
         _ensureRoot: function() {
-            var $root = this.root instanceof $ ? this.root : $(this.root);
-            if ($root.length != 1) {
-                throw new Error('Root element "' + $root + '" does not exist or is not unique.');
+            this.$root = this.root instanceof $ ? this.root : $(this.root);
+            if (this.$root.length != 1) {
+                throw new Error('Root element "' + this.$root.selector + '" does not exist or is not unique.');
             }
-            this.root = $root[0];
-            this.$root = $root;
+            this.root = this.$root.first();
         },
 
         _insertRoot: function() {
@@ -64,9 +48,9 @@ define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-dest
                     }, this);
                     context = this[key];
                 }
-                if (context && context.toJSON) {
-                    context = context.toJSON();
-                }
+            }
+            if (context && context.toJSON) {
+                context = context.toJSON();
             }
             // Maybe throw an error if the context could not be determined
             // instead of returning {}
@@ -75,8 +59,8 @@ define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-dest
 
         _configure: function(options) {
           if (this.options) options = _.extend({}, this.options, options);
-          for (var i = 0, l = viewOptions.length; i < l; i++) {
-            var attr = viewOptions[i];
+          for (var i = 0, l = this.resthubViewOptions.length; i < l; i++) {
+            var attr = this.resthubViewOptions[i];
             if (options[attr]) this[attr] = options[attr];
           }
           this.options = options;
@@ -99,7 +83,7 @@ define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-dest
         //
         delegateEvents: function(events) {
 
-            originalDelegateEvents.call(this, events);
+            Backbone.ResthubView.__super__.delegateEvents.call(this, events);
             this._eventsSubscriptions = [];
 
             if (!(events || (events = getValue(this, 'events')))) return;
@@ -117,13 +101,13 @@ define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-dest
             if (this._eventsSubscriptions && this._eventsSubscriptions.length > 0) {
                 PubSub.off(this._eventsSubscriptions.join(' '), null, this);
             }
-            originalUndelegateEvents.call(this);
+            Backbone.ResthubView.__super__.undelegateEvents.call(this);
         },
 
         // Override backbone setElement to bind a destroyed special event
         // when el is detached from DOM
         setElement: function(element, delegate) {
-            originalSetElement.call(this, element, delegate);
+            Backbone.ResthubView.__super__.setElement.call(this, element, delegate);
 
             if (this.root) {
                 this._ensureRoot();
@@ -143,7 +127,7 @@ define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-dest
         // after remove : this prevents dispose to be called twice
         remove: function() {
             this.$el.off("destroyed");
-            originalRemove.call(this);
+            Backbone.ResthubView.__super__.remove.call(this);
             var self = this;
             // call backbone dispose method on el DOM removing
             this.$el.on("destroyed", function() {
@@ -158,7 +142,7 @@ define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-dest
             // perform actions before effective close
             this.onDispose();
 
-            originalDispose.call(this);
+            Backbone.ResthubView.__super__.dispose.call(this);
             PubSub.off(null, null, this);
 
             if (Backbone.Validation) {
@@ -180,16 +164,16 @@ define(['underscore', 'backbone-orig', 'pubsub', 'libs/resthub/jquery-event-dest
         populateModel: function(form, model) {
             var attributes = {};
 
-            form = form || this.$el.find("form");
-            form = form instanceof Backbone.$ ? form : this.$el.find((Backbone.$(form)));
-            var fields = form.find("input[type!='submit']");
+            form = form || (this.el.tagName === 'FORM' ? this.$el : this.$el.find("form"));
+            form = form instanceof Backbone.$ ? form : this.$el.find(form);
+            var fields = form.find("input[type!='submit'][type!='button'], textarea, select");
 
             if (arguments.length < 2) model = this.model;
 
             // build array of form attributes to refresh model
-            fields.each(_.bind(function(index, value) {
-                attributes[value.name] = value.value;
-            }, this));
+            fields.each(function() {
+                attributes[Backbone.$(this).attr('name')] = Backbone.$(this).val();
+            });
 
             if (model) {
                 model.set(attributes);

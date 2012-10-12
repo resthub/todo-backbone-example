@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories("todo")
-@ImportResource("classpath*:applicationContext.xml")
+@ImportResource({"classpath*:resthubContext.xml", "classpath*:applicationContext.xml"})
 public class WebAppConfigurer {
 
 }
