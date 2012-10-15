@@ -33,11 +33,6 @@ public class TodoController extends RepositoryBasedRestController<Todo, String, 
         this.repository = repository;
     }
 
-    @Override
-    public String getIdFromResource(Todo resource) {
-        return resource.getId();
-    }
-
     @RequestMapping(value = "content/{content}", method = RequestMethod.GET)
     @ResponseBody
     public List<Todo> searchByContent(@PathVariable String content) {
