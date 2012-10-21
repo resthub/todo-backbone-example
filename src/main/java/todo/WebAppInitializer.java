@@ -19,6 +19,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
 
+        // Scan the todo package
         appContext.scan("todo");
 
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));

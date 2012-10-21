@@ -1,5 +1,5 @@
 define(['backbone'], function(Backbone){
-	var Router = Backbone.Router.extend({
+	var AppRouter = Backbone.Router.extend({
         initialize: function() {
             Backbone.history.start();
         },
@@ -25,5 +25,5 @@ define(['backbone'], function(Backbone){
         }
     });
     
-    return Router;
+    return AppRouter;
 });

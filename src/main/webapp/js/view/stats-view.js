@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'hbs!templates/stats', 'i18n!nls/messages'],
+define(['jquery', 'underscore', 'backbone', 'hbs!template/stats', 'i18n!nls/messages'],
     function($, _, Backbone, statsTmpl, messages){
         var StatsView = Backbone.ResthubView.extend({
 

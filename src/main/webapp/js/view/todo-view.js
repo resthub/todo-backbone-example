@@ -1,4 +1,4 @@
-define(['underscore', 'backbone', 'hbs!templates/todo'],
+define(['underscore', 'backbone', 'hbs!template/todo'],
 function(_, Backbone, todoTmpl){
   var TodoView = Backbone.ResthubView.extend({
 
