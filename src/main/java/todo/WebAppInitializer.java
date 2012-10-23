@@ -3,10 +3,9 @@ package todo;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
-
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
@@ -16,11 +15,10 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+        XmlWebApplicationContext appContext = new XmlWebApplicationContext();
         appContext.getEnvironment().setActiveProfiles("resthub-mongodb", "resthub-web-server");
-
-        // Scan the todo package
-        appContext.scan("todo");
+        String[] locations = { "classpath*:resthubContext.xml", "classpath*:applicationContext.xml" };
+        appContext.setConfigLocations(locations);
 
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));
         dispatcher.setLoadOnStartup(1);
