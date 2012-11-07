@@ -22,13 +22,9 @@ function(_, Backbone, todoTmpl){
     initialize: function(options) {
       _.bindAll(this, 'render', 'close', 'remove');
       // Add this context in order to allow automatic removal of the calback with dispose()
-      this.model.on('change', this.refresh, this);
+      this.model.on('change', this.render, this);
       this.model.on('destroy', this.remove, this);
-      this.render(this.model.toJSON());
-    },
-
-    refresh: function() {
-        this.render();
+      this.render();
     },
 
     // Toggle the `'done'` state of the model.

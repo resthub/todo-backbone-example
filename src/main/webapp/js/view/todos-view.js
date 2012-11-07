@@ -1,6 +1,6 @@
 define([
-  'underscore', 'backbone', 'hbs!template/todos', 'view/todo-view', 'i18n!nls/messages'],
-  function(_, Backbone, todosTmpl, TodoView, messages){
+  'underscore', 'backbone', 'hbs!template/todos', 'view/todo-view', 'i18n!nls/labels'],
+  function(_, Backbone, todosTmpl, TodoView, labels){
   var TodosView = Backbone.ResthubView.extend({
 
     // Delegated events for creating new items, and clearing completed ones.
@@ -8,6 +8,7 @@ define([
       'click .mark-all-done': 'toggleAllComplete'
     },
     template: todosTmpl,
+    labels : labels,
 
     // At initialization we bind to the relevant events on the `Todos`
     // collection, when items are added or changed. Kick things off by
@@ -20,7 +21,7 @@ define([
       this.collection.on('reset',   this.addAll, this);
       this.collection.on('all',     this.refresh, this);
 
-      this.render({messages: messages});
+      this.render();
 
       // Fetch unpaginated collection
       this.collection.fetch({ data: { page: 'no'} });
@@ -36,7 +37,7 @@ define([
     // Add a single todo item to the list by creating a view for it, and
     // appending its element to the `<ul>`.
     addOne: function(todo) {
-      var todoView = new TodoView({root: $('#todo-list'), model: todo});
+      new TodoView({root: $('#todo-list'), model: todo});
     },
 
     // Add all items in the **Todos** collection at once.
