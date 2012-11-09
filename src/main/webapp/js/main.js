@@ -75,11 +75,6 @@ require.config({
 
     locale: localStorage.getItem('locale') || 'en-us'
 });
-    
 
 // Load our app module and pass it to our definition function
-require(['router/app-router', 'view/app-view']
-        , function(AppRouter, AppView){
-    new AppView({root: $('#todoapp')});
-    new AppRouter();
-});
+require(['app']);
