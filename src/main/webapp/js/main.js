@@ -7,7 +7,7 @@ require.config({
         },
         'underscore-string': {
             deps: [
-                'underscore'
+            'underscore'
             ]
         },
         'handlebars-orig': {
@@ -15,36 +15,42 @@ require.config({
         },
         'backbone-orig': {
             deps: [
-                'underscore',
-                'underscore-string',
-                'jquery'
+            'underscore',
+            'underscore-string',
+            'jquery'
             ],
             exports: 'Backbone'
         },
         'backbone-queryparams': {
             deps: [
-                'backbone-orig',
-                'underscore'
+            'backbone-orig',
+            'underscore'
             ]
         },
         'backbone-paginator': {
             deps: [
-                'backbone-orig',
-                'underscore',
-                'jquery'
+            'backbone-orig',
+            'underscore',
+            'jquery'
             ],
             exports: 'Backbone.Paginator'
         },
         'bootstrap': {
             deps: [
-                'jquery'
+            'jquery'
             ]
         },
         'backbone-relational': {
-          deps: [
-               'backbone-orig',  
-               'underscore'  
-          ]
+            deps: [
+            'backbone-orig',  
+            'underscore'  
+            ]
+        },
+        'keymaster': {
+            exports: 'key'
+        },
+        'async': {
+            exports: 'async'
         }
     },
 
@@ -70,11 +76,12 @@ require.config({
         async: 'lib/async',
         keymaster: 'lib/keymaster',
         hbs: 'lib/resthub/require-handlebars',
-        template: '../template'
+        moment: 'lib/moment',
+        template: '../template',
+        console: 'lib/resthub/console'
     },
-
     locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function
-require(['app']);
+require(['console', 'app']);
