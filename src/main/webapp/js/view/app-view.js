@@ -1,16 +1,17 @@
-define(['jquery', 'underscore', 'backbone', 'hbs!template/app', 'i18n!nls/messages', 'view/todos-view', 'view/stats-view', 'collection/todos'],
-    function($, _, Backbone, appTmpl, messages, TodosView, StatsView, Todos){
+define(['jquery', 'underscore', 'backbone', 'hbs!template/app', 'i18n!nls/labels', 'view/todos-view', 'view/stats-view', 'collection/todos'],
+    function($, _, Backbone, appTmpl, labels, TodosView, StatsView, Todos){
         var AppView = Backbone.ResthubView.extend({
 
             events: {
                 'keypress #new-todo':  'createOnEnter',
                 'keyup #new-todo':     'showTooltip'
             },
-            collection: new Todos(),
-            template: appTmpl,
-
+            
             initialize: function() {
-                this.render({messages: messages});
+                this.collection = new Todos();
+                this.template = appTmpl;
+                this.labels = labels;
+                this.render();
                 // this.$() is a shortcut for this.$el.find().
                 this.input = this.$('#new-todo');
                 new TodosView({root: this.$('#todos'), collection: this.collection});
