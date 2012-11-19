@@ -1,6 +1,6 @@
-define(['jquery', 'underscore', 'backbone', 'hbs!template/app', 'i18n!nls/labels', 'view/todos-view', 'view/stats-view', 'collection/todos'],
-    function($, _, Backbone, appTmpl, labels, TodosView, StatsView, Todos){
-        var AppView = Backbone.ResthubView.extend({
+define(['jquery', 'underscore', 'backbone', 'resthub', 'hbs!template/app', 'i18n!nls/labels', 'view/todos-view', 'view/stats-view', 'collection/todos'],
+    function($, _, Backbone, Resthub, appTmpl, labels, TodosView, StatsView, Todos){
+        var AppView = Resthub.View.extend({
 
             events: {
                 'keypress #new-todo':  'createOnEnter',

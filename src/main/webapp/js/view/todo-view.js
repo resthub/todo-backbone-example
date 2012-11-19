@@ -1,6 +1,6 @@
-define(['underscore', 'backbone', 'hbs!template/todo'],
-function(_, Backbone, todoTmpl){
-  var TodoView = Backbone.ResthubView.extend({
+define(['underscore', 'backbone', 'resthub', 'hbs!template/todo'],
+function(_, Backbone, Resthub, todoTmpl){
+  var TodoView = Resthub.View.extend({
 
     //... is a list tag.
     tagName:  'li',
