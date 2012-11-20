@@ -1,12 +1,13 @@
 define([
-  'underscore', 'backbone', 'hbs!template/todos', 'view/todo-view', 'i18n!nls/labels'],
-  function(_, Backbone, todosTmpl, TodoView, labels){
-  var TodosView = Backbone.ResthubView.extend({
+  'underscore', 'backbone', 'resthub', 'hbs!template/todos', 'view/todo-view', 'i18n!nls/labels'],
+  function(_, Backbone, Resthub, todosTmpl, TodoView, labels){
+  var TodosView = Resthub.View.extend({
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       'click .mark-all-done': 'toggleAllComplete'
     },
+    
     template: todosTmpl,
     labels : labels,
 
