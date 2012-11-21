@@ -22,7 +22,7 @@
         <level value="warn" />
     </logger>
 
-    <root level="warn">
+    <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
