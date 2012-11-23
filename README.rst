@@ -12,7 +12,7 @@ In order to run it :
  * Install Maven and MongoDB
  * Create /data/db directory in order to allow MongoDB to store its data
  * Run mongod daemon
- * Run the following command : "mvn clean install t7:run" (Tomcat 7) or "mvn clean install jetty:run" (Jetty 8)
- * Open your browser and go to http://localhost:8080/todo/
+ * Run the following command : mvn clean install jetty:run
+ * Open your browser and go to http://localhost:8080
 
 
