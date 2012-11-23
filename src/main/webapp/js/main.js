@@ -79,7 +79,8 @@ require.config({
         moment: 'lib/moment',
         template: '../template',
         console: 'lib/resthub/console'
-    }
+    },
+    locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function

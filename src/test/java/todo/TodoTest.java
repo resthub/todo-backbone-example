@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 
 /**
  * Tests for the Todo POJO.
- * @author Nicolas carlier <ncarlier@nunux.org>
  */
 public class TodoTest {
     @Test

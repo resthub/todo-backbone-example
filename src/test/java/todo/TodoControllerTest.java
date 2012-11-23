@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.fest.assertions.api.Assertions;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -17,14 +18,14 @@ import org.testng.annotations.Test;
  * Unit tests for the Todo Controller.
  * Perstence layer is mocked... because testing Spring Data is a bit useless.
  */
-@ActiveProfiles("resthub-mongodb")
-public class TodoControllerTest extends AbstractTest {
+public class TodoControllerTest {
 
-    @Mock TodoRepository todoRepository;
+    @Mock
+    TodoRepository todoRepository;
 
-    @Inject
+    @InjectMocks
     private TodoController controller;
-    
+
     @BeforeTest
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -37,12 +38,6 @@ public class TodoControllerTest extends AbstractTest {
         List<Todo> todos = new ArrayList<>();
         todos.add(todo);
         Mockito.when(todoRepository.findByContentLike("test")).thenReturn(todos);
-        controller.setRepository(todoRepository);
-
-        // ok... it is completely useless to mock this method.
-        // But it is a sample in case your controller method do some more logic.
-        // You got it?
-        
         List<Todo> result = controller.searchByContent("test");
         Assertions.assertThat(result).containsAll(todos);
     }
