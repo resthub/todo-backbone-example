@@ -7,7 +7,7 @@ require.config({
         },
         'underscore-string': {
             deps: [
-            'underscore'
+                'underscore'
             ]
         },
         'handlebars-orig': {
@@ -15,35 +15,37 @@ require.config({
         },
         'backbone': {
             deps: [
-            'underscore',
-            'underscore-string',
-            'jquery'
+                'underscore',
+                'underscore-string',
+                'jquery'
             ],
             exports: 'Backbone'
         },
         'backbone-queryparams': {
             deps: [
-            'backbone',
-            'underscore'
+                'backbone'
             ]
+        },
+        'backbone-datagrid': {
+            deps: [
+                'backbone'
+            ],
+            exports: 'Backbone.Datagrid'
         },
         'backbone-paginator': {
             deps: [
-            'backbone',
-            'underscore',
-            'jquery'
+                'backbone'
             ],
             exports: 'Backbone.Paginator'
         },
         'bootstrap': {
             deps: [
-            'jquery'
+                'jquery'
             ]
         },
         'backbone-relational': {
             deps: [
-            'backbone',  
-            'underscore'  
+                'backbone'
             ]
         },
         'keymaster': {
@@ -71,6 +73,7 @@ require.config({
         'handlebars-orig': 'lib/handlebars',
         'handlebars': 'lib/resthub/handlebars-helpers',
         'backbone-queryparams': 'lib/backbone-queryparams',
+        'backbone-datagrid': 'lib/backbone-datagrid',
         'backbone-paginator': 'lib/backbone-paginator',
         'backbone-relational': 'lib/backbone-relational',
         async: 'lib/async',
@@ -79,7 +82,8 @@ require.config({
         moment: 'lib/moment',
         template: '../template',
         console: 'lib/resthub/console'
-    }
+    },
+    locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function
