@@ -1,29 +1,26 @@
-define(['backbone'], function(Backbone){
-	var AppRouter = Backbone.Router.extend({
+define(['backbone', 'backbone-queryparams'], function(Backbone) {
+
+    var AppRouter = Backbone.Router.extend({
+        
         initialize: function() {
-            Backbone.history.start();
+            Backbone.history.start({ pushState: true, root: "/" });
         },
+        
         routes: {
-            'fr': 'fr',
-            'en': 'en'
+            '': 'main',
+            'test': 'test'
         },
-        fr: function( ){
-        	var locale = localStorage.getItem('locale');
-        	if(locale != 'fr-fr') {
-	        	localStorage.setItem('locale', 'fr-fr'); 
-				// i18n plugin require page reload !
-                location.reload();
-			}
+        
+        main: function() {
+            console.debug("Main route activated");
         },
-        en: function( ){
-        	var locale = localStorage.getItem('locale');
-        	if(locale != 'en-us') {
-            	localStorage.setItem('locale', 'en-us');
-                // i18n plugin require page reload !
-				location.reload();
-			}
+
+        test: function() {
+            console.debug("Test route activated");
+            alert("test");
         }
     });
     
     return AppRouter;
+
 });
