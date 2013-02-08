@@ -27,7 +27,7 @@ public class TodoControllerIT extends AbstractWebTest {
         Assertions.assertThat(t.getId()).isNotNull();
         String id = t.getId();
 
-        List<Todo> todos = this.request("/api/todo/content/test").getJson().resource(List.class);
+        List<Todo> todos = this.request("/api/todo/content/test").jsonGet().resource(List.class);
         Assertions.assertThat(todos).isNotEmpty();
 
         Response res = this.request("/api/todo/" + id).delete();
