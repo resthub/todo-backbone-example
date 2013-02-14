@@ -1,4 +1,4 @@
-define(['router/app-router', 'view/app-view']
+define(['router/app-router', 'view/app-view', 'json2']
         , function(AppRouter, AppView){
     
     // Send to the server all warn or error logs
