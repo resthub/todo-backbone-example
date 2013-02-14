@@ -81,8 +81,11 @@ require.config({
         hbs: 'lib/resthub/require-handlebars',
         moment: 'lib/moment',
         template: '../template',
+		json2: 'lib/json2',
         console: 'lib/resthub/console'
-    }
+    },
+
+    locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function

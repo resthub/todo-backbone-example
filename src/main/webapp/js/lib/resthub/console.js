@@ -1,19 +1,23 @@
-define(['jquery'], function ($) {
+define(['jquery', 'underscore'], function ($, _) {
     
-// In case we forget to take out console statements. IE becomes very unhappy when we forget. Let's not make IE unhappy
+    // In case we forget to take out console statements. IE becomes very unhappy when we forget. Let's not make IE unhappy
     if(typeof(window.console) === 'undefined') {
-        window.console = { };
+        window.console = {};
         window.console.log = window.console.error = window.console.info = window.console.debug = window.console.warn = window.console.trace = window.console.dir = window.console.dirxml = window.console.group = window.console.groupEnd = window.console.time = window.console.timeEnd = window.console.assert = window.console.profile = function() {};
     }
 
     var console = window.console;
 
     // manage IE8 & 9
-    var methods = ['log','info','warn','error','assert','dir','clear','profile','profileEnd'];
-    if (Function.prototype.bind && console && typeof console.log === 'object') {
-        methods.forEach(function (method) {
-            console[method] = this.call(console[method], console);
-        }, Function.prototype.bind);
+    var methods = ['log', 'debug', 'info','warn','error','assert','dir','clear','profile','profileEnd'];
+    if (typeof console.log === 'object') {
+        // create debug method
+        console.debug = console.log;
+
+        _.each(methods, function (method) {
+            console['_' + method] = console[method];
+            console[method] = function(msg) { console['_' + method](msg); };
+        });
     }
 
     // Can be customized if needed
@@ -42,44 +46,44 @@ define(['jquery'], function ($) {
     // console.log = console.debug
     console.log = function () {
         log.apply(this, Array.prototype.slice.call(arguments));
-        if(enabledFor('debug')){
+        if(enabledFor('debug')) {
             sendLogToServer('debug', arguments);
         }
     };
     console.debug = function () {
         debug.apply(this, Array.prototype.slice.call(arguments));
-        if(enabledFor('debug')){
+        if(enabledFor('debug')) {
             sendLogToServer('debug', arguments);
         }
     };
     console.info = function () {
         info.apply(this, Array.prototype.slice.call(arguments));
-        if(enabledFor('info')){
+        if(enabledFor('info')) {
             sendLogToServer('info', arguments);
         }
     };
     console.warn = function () {
         warn.apply(this, Array.prototype.slice.call(arguments));
-        if(enabledFor('warn')){
+        if(enabledFor('warn')) {
             sendLogToServer('warn', arguments);
         }
     };
     console.error = function () {
         error.apply(this, Array.prototype.slice.call(arguments));
-        if(enabledFor('error')){
+        if(enabledFor('error')) {
             sendLogToServer('error', arguments);
         }
     };
 
 
-    var sendLogToServer = function(level, msg){
-        if((typeof msg === 'object') && (msg.length === 1) && (typeof msg[0] === 'string')){
+    var sendLogToServer = function(level, msg) {
+        if((typeof msg === 'object') && (msg.length === 1) && (typeof msg[0] === 'string')) {
             var message = msg[0];
         } else {
             var message = JSON.stringify(msg);
         }
 
-        var log = {'level':level, 'message': message, 'time': new Date()};
+        var log = { 'level':level, 'message': message, 'time': new Date() };
         
         $.ajax({
             type: 'POST',
@@ -93,8 +97,8 @@ define(['jquery'], function ($) {
     };
 
     // manage global JS errors
-    window.onerror = function(message, url, linenumber){
-        if(enabledFor('error')){
+    window.onerror = function(message, url, linenumber) {
+        if(enabledFor('error')) {
             sendLogToServer('error', 'JavaScript error: ' + message + ' on line ' + linenumber + ' for ' + url);
         }
     };
