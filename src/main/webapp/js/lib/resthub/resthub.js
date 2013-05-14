@@ -1,3 +1,4 @@
+// RESThub Backbone stack 2.1.1
 define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'], function(_, Backbone, $) {
 
     var Resthub = { };
@@ -256,10 +257,16 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
         var constraintMessage = function(propKey, constraint, messages) {
             var msg = constraint.message;
 
+            var msgPropKey = 'validation.' + propKey + '.' +  constraint.type + '.message';
             var msgKey = 'validation.' + constraint.type + '.message';
 
-            if (messages && messages[msgKey]) {
-                msg = messages[msgKey];
+            if (messages) {
+
+                if (messages[msgPropKey]) {
+                    msg = messages[msgPropKey];
+                } else if (messages[msgKey]) {
+                    msg = messages[msgKey];
+                }
 
                 for (var p in constraint) {
                     msg = msg.replace(new RegExp('{' + p + '}', 'g'), constraint[p]);
@@ -607,6 +614,9 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
                         if (checkboxes.length > 1) {
                             attributes[name] = [];
                         }
+                        else if (checkboxes.length === 1) {
+                            attributes[name] = "false";
+                        }
                     }
                     if ($this.is(':checked')) {
                         if (_.isArray(attributes[name])) {
@@ -644,7 +654,7 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
 
             if (options && options.pushState) {
                 // force all links to be handled by Backbone pushstate - no get will be send to server
-                $(window.document).on('click', 'a:not([data-bypass])', function(evt) {
+                $(window.document).on('click', 'a[href]:not([data-bypass])', function(evt) {
 
                     var protocol = this.protocol + '//';
                     var href = this.href;

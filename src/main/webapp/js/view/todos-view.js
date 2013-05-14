@@ -17,10 +17,10 @@ define([
     initialize: function(options) {
       _.bindAll(this, 'addOne', 'addAll', 'render', 'toggleAllComplete');
 
-      // Add this context in order to allow automatic removal of the calback with dispose()
-      this.collection.on('add',     this.addOne, this);
-      this.collection.on('reset',   this.addAll, this);
-      this.collection.on('all',     this.refresh, this);
+      // Add this context in order to allow automatic removal of the callback with dispose()
+      this.listenTo(this.collection, 'add', this.addOne);
+      this.listenTo(this.collection, 'reset', this.addAll);
+      this.listenTo(this.collection, 'all', this.refresh);
 
       this.render();
 

@@ -22,7 +22,7 @@ define(['jquery', 'underscore', 'backbone', 'resthub', 'hbs!template/stats', 'i1
             initialize: function() {
                 _.bindAll(this, 'render');
                 // Add this context in order to allow automatic removal of the calback with dispose()
-                this.collection.on('all',  this.render, this);
+                this.listenTo(this.collection, 'all',  this.render);
             },
 
             // Clear all done todo items, destroying their models.
