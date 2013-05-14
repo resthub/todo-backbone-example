@@ -22,8 +22,8 @@ function(_, Backbone, Resthub, todoTmpl){
     initialize: function(options) {
       _.bindAll(this, 'render', 'close', 'remove');
       // Add this context in order to allow automatic removal of the calback with dispose()
-      this.model.on('change', this.render, this);
-      this.model.on('destroy', this.remove, this);
+      this.listenTo(this.model, 'change', this.render);
+      this.listenTo(this.model, 'destroy', this.remove);
       this.render();
     },
 
