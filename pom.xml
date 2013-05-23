@@ -14,19 +14,19 @@
         <dependency>
             <groupId>org.resthub</groupId>
             <artifactId>resthub-mongodb</artifactId>
-            <version>${project.version}</version>
+            <version>${resthub.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.resthub</groupId>
             <artifactId>resthub-web-server</artifactId>
-            <version>${project.version}</version>
+            <version>${resthub.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.resthub</groupId>
             <artifactId>resthub-test</artifactId>
-            <version>${project.version}</version>
+            <version>${resthub.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -107,11 +107,22 @@
         </plugins>
     </build>
 
+    <properties>
+      <resthub.version>2.1.1</resthub.version>
+    </properties>
+
     <repositories>
-        <repository>
-            <id>oss</id>
-            <url>https://oss.sonatype.org/content/repositories/orgresthub-793</url>
-        </repository>
+      <!-- use this repository for RESThub snapshots -->
+      <repository>
+        <id>oss-sonatype-snapshot</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        <releases>
+          <enabled>false</enabled>
+        </releases>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>
+      </repository>
     </repositories>
 
 </project>
