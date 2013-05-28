@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/api/todo")
-public class TodoController extends RepositoryBasedRestController<Todo, String, TodoRepository> {
+public class TodoController extends RepositoryBasedRestController<Todo, Long, TodoRepository> {
 
     protected Logger logger = LoggerFactory.getLogger(TodoController.class);
 
@@ -36,6 +36,6 @@ public class TodoController extends RepositoryBasedRestController<Todo, String, 
     @RequestMapping(value = "content/{content}", method = RequestMethod.GET)
     @ResponseBody
     public List<Todo> searchByContent(@PathVariable String content) {
-        return this.repository.findByContentLike(content);
+        return this.repository.findByContentLike("%" + content + "%");
     }
 }
