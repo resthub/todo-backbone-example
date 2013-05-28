@@ -1,18 +1,23 @@
 package todo;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * A model class implemented as a POJO classes annotated by Spring Data annotations.
  */
-@Document
+@Entity
 public class Todo {
 
-    @Id
-    private String id;
+    @Id @GeneratedValue
+    private Long id;
     private String content;
+    // We specify column name since order is a registered SQL keyword
+    @Column(name = "ord")
     private Integer order;
     private Boolean done;
 
@@ -43,11 +48,11 @@ public class Todo {
         this.done = done;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

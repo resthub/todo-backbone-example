@@ -34,10 +34,9 @@ public class TodoControllerTest {
     @Test
     public void testSearchByContent() {
         Todo todo = new Todo("test");
-        todo.setId("#test");
         List<Todo> todos = new ArrayList<>();
         todos.add(todo);
-        Mockito.when(todoRepository.findByContentLike("test")).thenReturn(todos);
+        Mockito.when(todoRepository.findByContentLike("%test%")).thenReturn(todos);
         List<Todo> result = controller.searchByContent("test");
         Assertions.assertThat(result).containsAll(todos);
     }

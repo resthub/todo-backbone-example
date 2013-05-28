@@ -9,11 +9,15 @@
 
     <name>Todo</name>
 
+    <properties>
+        <resthub.version>2.1.1</resthub.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
             <groupId>org.resthub</groupId>
-            <artifactId>resthub-mongodb</artifactId>
+            <artifactId>resthub-jpa</artifactId>
             <version>${resthub.version}</version>
         </dependency>
 
@@ -106,10 +110,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <properties>
-      <resthub.version>2.1.1</resthub.version>
-    </properties>
 
     <repositories>
       <!-- use this repository for RESThub snapshots -->
