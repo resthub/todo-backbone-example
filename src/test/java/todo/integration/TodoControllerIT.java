@@ -11,13 +11,13 @@ import org.testng.annotations.Test;
 import todo.Todo;
 
 /**
- * Integration tests for the Todo controller, a local MongoDB instance should be running
+ * Integration tests for the Todo controller
  */
 public class TodoControllerIT extends AbstractWebTest {
 
     public TodoControllerIT() {
-        // Call AbstractWebTest consttructor with the Spring profiles to activate
-        super("resthub-mongodb,resthub-web-server");
+        // Call AbstractWebTest constructor with the Spring profiles to activate
+        super("resthub-jpa,resthub-web-server");
     }
 
     @Test
@@ -25,7 +25,7 @@ public class TodoControllerIT extends AbstractWebTest {
         Todo t = this.request("/api/todo").jsonPost(new Todo("this is a test")).resource(Todo.class);
         Assertions.assertThat(t).isNotNull();
         Assertions.assertThat(t.getId()).isNotNull();
-        String id = t.getId();
+        Long id = t.getId();
 
         List<Todo> todos = this.request("/api/todo/content/test").jsonGet().resource(List.class);
         Assertions.assertThat(todos).isNotEmpty();
