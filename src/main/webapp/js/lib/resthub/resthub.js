@@ -1,7 +1,8 @@
-// RESThub Backbone stack 2.1.1
 define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'], function(_, Backbone, $) {
 
     var Resthub = { };
+
+    Resthub.VERSION = '2.1.2';
 
     // Avoid GET caching issues with Internet Explorer
     if (XMLHttpRequest) {
@@ -474,40 +475,64 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
         _ensureContext: function(context) {
             // If context provided as parameter is undefined or not an object, use this.context attribute
             if ((typeof context === "undefined") || (typeof context !== 'object')) {
-                // Dynamic context provided as a function
-                if (_.isFunction(this.context)) {
-                    context = this.context();
-                    // Context provided as a context object
-                } else if (typeof this.context === 'object') {
-                    context = this.context;
-                    // Else we automatically populate it with a custom property name set in this.context, model property or collection property
-                } else context = {};
+                context = {};
+            }
+
+            // Context provided as a context object
+            if (typeof this.context === 'object') {
+                _.extend(context, this.context);
+            // Dynamic context provided as a function
+            } else if (_.isFunction(this.context)) {
+                // Merge the result of this.context() into context
+                _.extend(context, this.context());
             }
             // If context provided as parameter is a Model or Collection instance, we save it for later use
             if (context instanceof Backbone.Model) {
                 var jsonModel = context.toJSON();
-                context = {};
             }
             if (context instanceof Backbone.Collection) {
                 var jsonCollection = context.toJSON();
-                context = {};
             }
             // Add in the context the property named by this.context String, this.model, this.collection and this.labels if they exist.
             _.each([this.context, 'model', 'collection', 'labels'], function(key) {
                 if (typeof this[key] !== "undefined")
                     if (this[key].toJSON) {
-                        context[key] = this[key].toJSON();
+                        // Create or merge
+                        if (typeof context[key] === "undefined") {
+                            context[key] = this[key].toJSON();
+                        } else {
+                            _.extend(context[key], this[key].toJSON());
+                        }
                     } else {
-                        context[key] = this[key];
+                        // Create or merge
+                        if (typeof context[key] === "undefined") {
+                            context[key] = this[key];
+                        } else {
+                            _.extend(context[key], this[key]);
+                        }
+                        
                     }
 
             }, this);
-            // Eventually override default model and collection attribute with the one passed as parameter
+            // Eventually merge default model and collection attribute with the one passed as parameter
             if (context instanceof Backbone.Model) {
-                context['model'] = jsonModel;
+                // Create or merge
+                if (typeof context['model'] === "undefined") {
+                    context['model'] = jsonModel;
+                } else {
+                    _.extend(context['model'], jsonModel);
+                }
+                
             }
+
             if (context instanceof Backbone.Collection) {
-                context['collection'] = jsonCollection;
+                  // Create or merge
+                  if (typeof context['collection'] === "undefined") {
+                    context['collection'] = jsonCollection;
+                } else {
+                    _.extend(context['collection'], jsonCollection);
+                }
+
             }
             // Maybe throw an error if the context could not be determined
             // instead of returning {}
@@ -540,20 +565,23 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
         //
         delegateEvents: function(events) {
 
-            Resthub.View.__super__.delegateEvents.call(this, events);
+            Resthub.View.__super__.delegateEvents.apply(this, arguments);
             if (!(events || (events = getValue(this, 'events')))) return;
+            
             _.each(events, _.bind(function(method, key) {
                 if (key.indexOf(this.globalEventsIdentifier) != 0) return;
                 if (!_.isFunction(method)) method = this[method];
                 if (!method) throw new Error('Method "' + key + '" does not exist');
                 this.listenTo(Backbone, key, method);
             }, this));
+
+            return this;
         },
 
         // Override backbone setElement to bind a destroyed special event
         // when el is detached from DOM
         setElement: function(element, delegate) {
-            Resthub.View.__super__.setElement.call(this, element, delegate);
+            Resthub.View.__super__.setElement.apply(this, arguments);
 
             if (this.root) {
                 this._ensureRoot();
@@ -561,23 +589,29 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
             }
 
             // call backbone stopListening method on el DOM removing
-            this.$el.on("destroyed", _.bind(this.stopListening, this));
+            this.$el.on("destroyed", _.bind(this._destroy, this));
 
             return this;
+        },
+
+        _destroy: function() {
+            // Trigger destroy event on the view
+            this.trigger("destroy");
+            this.stopListening();
         },
 
         // Override Backbone method unbind destroyed special event
         // after remove : this prevents stopListening to be called twice
         remove: function() {
             this.$el.off("destroyed");
-            Resthub.View.__super__.remove.call(this);
-        },
-
-        stopListening: function() {
-            Resthub.View.__super__.stopListening.call(this);
+            // Trigger destroy event on the view
+            this.trigger("destroy");
+            // Unbind Backbone Validation is needed
             if (Backbone.Validation) {
                 Backbone.Validation.unbind(this);
             }
+            Resthub.View.__super__.remove.apply(this, arguments);
+
             return this;
         },
 
@@ -602,7 +636,7 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
 
                 // specific test for radio to get only checked option or null is no option checked
                 if ($this.is(':radio')) {
-                    if ($this.attr('checked')) {
+                    if ($this.is(':checked')) {
                         attributes[name] = $this.val();
                     } else if (!attributes[name]) {
                         attributes[name] = null;
@@ -631,9 +665,10 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
             });
 
             if (model) {
-                model.set(attributes, {silent: true});
-                model.set({});
+                model.set(attributes, {validate: true});
             }
+
+            return this;
         }
 
     });
