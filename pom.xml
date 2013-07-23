@@ -10,7 +10,7 @@
     <name>Todo</name>
 
     <properties>
-        <resthub.version>2.1.2-SNAPSHOT</resthub.version>
+        <resthub.version>2.1.2</resthub.version>
     </properties>
 
     <dependencies>
