@@ -38,7 +38,7 @@ require.config({
                 'jquery'
             ]
         },
-        'backbone-relational': {
+        'backbone-associations': {
             deps: [
                 'backbone'
             ]
@@ -78,7 +78,8 @@ require.config({
         template: '../template',
 		json2: 'lib/json2',
         console: 'lib/resthub/console'
-    }
+    },
+    locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function
