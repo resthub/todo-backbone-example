@@ -468,6 +468,9 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
             if (!this.template || typeof this.template !== 'function') {
                 throw new Error('Invalid template provided.');
             }
+            if(!this.$root.has(this.$el).length) {
+                this._insertRoot();
+            }
             context = this._ensureContext(context);
             this.$el.html(this.template(context));
             return this;
@@ -586,7 +589,6 @@ define(['underscore', 'backbone', 'jquery', 'lib/resthub/jquery-event-destroyed'
 
             if (this.root) {
                 this._ensureRoot();
-                this._insertRoot();
             }
 
             // call backbone stopListening method on el DOM removing

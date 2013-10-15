@@ -29,6 +29,12 @@ define(['jquery', 'underscore', 'backbone', 'resthub', 'hbs!template/stats', 'i1
             clearCompleted: function() {
                 _.each(this.collection.done(), function(todo){ todo.clear(); });
                 return false;
+            },
+
+            render: function() {
+                // Call super render function with the same arguments
+                StatsView.__super__.render.apply(this, arguments);
+                this.$(".todo-count").attr("aria-atomic", "true");
             }
 
         });

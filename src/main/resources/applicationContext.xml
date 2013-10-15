@@ -13,4 +13,7 @@
 
     <jpa:repositories base-package="todo" />
 
+    <context:property-placeholder location="classpath:swagger.properties" />
+    <bean id="documentationConfig" class="com.mangofactory.swagger.configuration.DocumentationConfig"/>
+
 </beans>
