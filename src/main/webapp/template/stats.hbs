@@ -1,5 +1,5 @@
     {{#if total}}
-    <span class="todo-count">
+    <span class="todo-count" aria-live="assertive">
         <span class="number">{{remaining}}</span>
         <span class="word">{{ifequalsinline remaining 1 labels.item labels.items}}</span>
           {{ifequalsinline remaining 1 labels.left labels.lefts}}.
