@@ -17,7 +17,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         XmlWebApplicationContext appContext = new XmlWebApplicationContext();
-        appContext.getEnvironment().setActiveProfiles("resthub-jpa", "resthub-pool-bonecp", "resthub-web-server", "resthub-client-logging");
+        appContext.getEnvironment().setActiveProfiles("resthub-jpa", "resthub-pool-hikaricp", "resthub-web-server", "resthub-client-logging");
         String[] locations = { "classpath*:resthubContext.xml", "classpath*:applicationContext.xml" };
         appContext.setConfigLocations(locations);
 
