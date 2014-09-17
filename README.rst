@@ -13,4 +13,6 @@ In order to run it :
  * Run the following command : mvn clean install jetty:run
  * Open your browser and go to http://localhost:8080
 
+Access to Swagger UI at http://localhost:8080/documentation
+
 
